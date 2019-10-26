@@ -2,8 +2,8 @@
   <div class="hero">
     <div class="hero-head"></div>
     <div class="hero-body">
-      <div class="columns">
-        <div class="column is-vcentered is-centered is-half">
+      <div class="columns is-centered">
+        <div class="column is-vcentered is-half">
           <div class="has-text-centered title">Nursespree</div>
           <nuxt />
         </div>

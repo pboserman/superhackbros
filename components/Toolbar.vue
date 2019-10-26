@@ -34,18 +34,20 @@
       </div>
     </nav>
     <div class="navbar mobile-app-icon-bar is-hidden-tablet is-fixed-bottom">
-      <button class="has-text-link">
+      <nuxt-link to="/" class="button has-text-link is-large">
         <i class="fa fa-home" aria-hidden="true"></i>
-      </button>
-      <button class="has-text-link">
-        <i class="fa fa-map-marker" aria-hidden="true"></i>
-      </button>
-      <button class="has-text-link">
-        <i class="fa fa-upload" aria-hidden="true"></i>
-      </button>
-      <button @click="logout" class="has-text-link">
-        <i class="fa fa-sign-out" aria-hidden="true"></i>
-      </button>
+      </nuxt-link>
+      <nuxt-link to="/medicine" class="button has-text-link is-large">
+        <i class="fa fa-heartbeat" aria-hidden="true"></i>
+      </nuxt-link>
+      <nuxt-link to="/profile" class="button has-text-link is-large">
+        <i class="fa fa-user" aria-hidden="true"></i>
+      </nuxt-link>
+      <a @click="logout" class="button is-large">
+        <span class="icon has-text-link"
+          ><i class="fa fa-sign-out" aria-hidden="true"></i
+        ></span>
+      </a>
     </div>
   </div>
 </template>
@@ -77,14 +79,15 @@ export default {
   -webkit-justify-content: space-around;
   -ms-flex-pack: distribute;
   justify-content: space-around;
-  background: #fefefe;
+  border-top: 1px solid black;
+  background: linear-gradient(to bottom right, #00effe, white);
   bottom: 0;
 }
 
-.mobile-app-icon-bar button {
+.mobile-app-icon-bar .button {
   padding: 1.25rem;
   cursor: pointer;
-  background: white;
+  background: rgba(0, 0, 0, 0);
   outline: none;
   border: 0px;
 }

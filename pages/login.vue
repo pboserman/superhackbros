@@ -1,52 +1,54 @@
 <template>
-  <form @submit.prevent>
-    <div class="title is-2">Login</div>
-    <div class="field">
-      <p class="control has-icons-left has-icons-right">
-        <input
-          v-model="account.email"
-          class="input"
-          type="email"
-          placeholder="Email"
-        />
-        <span class="icon is-small is-left">
-          <i class="fas fa-envelope"></i>
-        </span>
-        <span class="icon is-small is-right">
-          <i class="fa fa-check"></i>
-        </span>
-      </p>
-    </div>
-    <div class="field">
-      <p class="control has-icons-left">
-        <input
-          v-model="account.password"
-          class="input"
-          type="password"
-          placeholder="Password"
-        />
-        <span class="icon is-small is-left">
-          <i class="fa fa-lock"></i>
-        </span>
-      </p>
-    </div>
-    <div class="level is-mobile">
-      <div class="level-right is-mobile">
-        <div class="level-item is-mobile">
-          <button type="submit" @click="login" class="button is-primary">
-            Login
-          </button>
-        </div>
-        <div v-if="isError" class="alert alert-danger">
-          <p class="mb-0">{{ errMsg }}</p>
+  <div class="container">
+    <form @submit.prevent>
+      <div class="subtitle">Login</div>
+      <div class="field">
+        <p class="control has-icons-left has-icons-right">
+          <input
+            v-model="account.email"
+            class="input"
+            type="email"
+            placeholder="Email"
+          />
+          <span class="icon is-small is-left">
+            <i class="fa fa-envelope"></i>
+          </span>
+          <span class="icon is-small is-right">
+            <i class="fa fa-check"></i>
+          </span>
+        </p>
+      </div>
+      <div class="field">
+        <p class="control has-icons-left">
+          <input
+            v-model="account.password"
+            class="input"
+            type="password"
+            placeholder="Password"
+          />
+          <span class="icon is-small is-left">
+            <i class="fa fa-lock"></i>
+          </span>
+        </p>
+      </div>
+      <div class="level is-mobile">
+        <div class="level-right is-mobile">
+          <div class="level-item is-mobile">
+            <button type="submit" @click="login" class="button is-primary">
+              Login
+            </button>
+          </div>
+          <div v-if="isError" class="alert alert-danger">
+            <p class="mb-0">{{ errMsg }}</p>
+          </div>
         </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </template>
 
 <script>
-import { setTimeout } from 'timers';
+import { setTimeout } from 'timers'
 export default {
   layout: 'login',
   data: () => ({
@@ -57,21 +59,25 @@ export default {
     isError: false,
     errMsg: ''
   }),
-  methods: { 
+  methods: {
     login() {
-      // TODO: ADD FIREBASE AUTH HERE
-      this.$store.dispatch('users/login',this.account).catch(error => {
-        this.isError = true;
-        this.errMsg = error.code;
+      this.$store.dispatch('users/login', this.account).catch(error => {
+        this.isError = true
+        this.errMsg = error.code
 
-        setTimeout(()  => {
-        this.isError = false;
-        }, 5000);
-      });
+        setTimeout(() => {
+          this.isError = false
+        }, 5000)
+      })
 
       this.$router.push('/')
-      
     }
   }
-} 
+}
 </script>
+
+<style scoped>
+.container {
+  padding-top: 100px;
+}
+</style>
