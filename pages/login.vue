@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <form @submit.prevent>
     <div class="title is-2">Login</div>
     <div class="field">
       <p class="control has-icons-left has-icons-right">
@@ -37,29 +37,41 @@
             Login
           </button>
         </div>
+        <div v-if="isError" class="alert alert-danger">
+          <p class="mb-0">{{ errMsg }}</p>
+        </div>
       </div>
     </div>
   </form>
 </template>
 
 <script>
+import { setTimeout } from 'timers';
 export default {
   layout: 'login',
   data: () => ({
     account: {
       email: '',
       password: ''
-    }
+    },
+    isError: false,
+    errMsg: ''
   }),
-  methods: {
+  methods: { 
     login() {
       // TODO: ADD FIREBASE AUTH HERE
-      console.log({
-        email: this.account.email,
-        password: this.account.password
-      })
+      this.$store.dispatch('users/login',this.account).catch(error => {
+        this.isError = true;
+        this.errMsg = error.code;
+
+        setTimeout(()  => {
+        this.isError = false;
+        }, 5000);
+      });
+
       this.$router.push('/')
+      
     }
   }
-}
+} 
 </script>
