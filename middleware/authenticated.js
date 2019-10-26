@@ -3,6 +3,6 @@ export default function({ store, route, redirect }) {
   //const blockedRoute = /\/routename\/*/g; blocks users form accessing any of the other pages
   //if (!user && route.path.match(blockedRoute))
   if (!user) {
-    // redirect('/login');
+    redirect('/login');
   }
 }
