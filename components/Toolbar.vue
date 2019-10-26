@@ -60,7 +60,7 @@ export default {
       await auth.signOut()
       await Cookie.remove('access_token')
 
-      this.$router.push('/login')
+      location.href = "/login"
     }
   }
 }
