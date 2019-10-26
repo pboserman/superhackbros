@@ -43,7 +43,7 @@
       <button class="has-text-link">
         <i class="fa fa-upload" aria-hidden="true"></i>
       </button>
-      <button class="has-text-link">
+      <button @click="logout" class="has-text-link">
         <i class="fa fa-sign-out" aria-hidden="true"></i>
       </button>
     </div>
