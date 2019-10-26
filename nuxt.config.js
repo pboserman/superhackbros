@@ -30,6 +30,12 @@ export default {
   plugins: [
   ],
   /*
+  ** Router settings
+  */
+  router: {
+    middleware: ['authenticated']
+  },
+  /*
   ** Nuxt.js dev-modules
   */
   buildModules: [
