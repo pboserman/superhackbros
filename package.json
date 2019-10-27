@@ -19,7 +19,8 @@
     "firebase": "^7.2.2",
     "js-cookie": "^2.2.1",
     "jwt-decode": "^2.2.0",
-    "nuxt": "^2.0.0"
+    "nuxt": "^2.0.0",
+    "vuefire": "^2.2.0-alpha.0"
   },
   "devDependencies": {
     "eslint-config-prettier": "^4.1.0",
