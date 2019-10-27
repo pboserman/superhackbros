@@ -17,9 +17,6 @@
             </a>
           </div>
           <div>{{ zipCode }}</div>
-          <div>
-            <qrcode-vue :value="value" :size="size" level="H"></qrcode-vue>
-          </div>
         </div>
       </div>
     </div>
@@ -28,13 +25,11 @@
 
 <script>
 import { lookUpZipCode } from '~/services/medicineSearch'
-import QrcodeVue from 'qrcode.vue'
+
 
 export default {
   data: () => ({
-    zipCode: {},
-    value: 'http://localhost:3000/profile',
-    size: 300,
+    zipCode: {}
   }),
   methods: {
     getZipCode() {
@@ -46,9 +41,6 @@ export default {
   },
   mounted() {
     this.getZipCode()
-  },
-  components: {
-    QrcodeVue,
   },
 }
 </script>

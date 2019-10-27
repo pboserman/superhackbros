@@ -18,7 +18,7 @@
               </nuxt-link>
               </div>
     <div>
-            <qrcode-vue :value="value" :size="size" level="H"></qrcode-vue>
+            <qrcode-vue :value="value" :size="size" level="H" class="center"></qrcode-vue>
     </div>
               
             
@@ -37,8 +37,11 @@ import {db} from '~/services/firebase.js'
 import QrcodeVue from 'qrcode.vue'
 
 export default {
+data:() =>({
+  value: 'http://localhost:3000/profile',
+  size: 250,
   
-data:() =>({pers: {
+  pers: {
       name: '',
       age: '',
       gender: '',
@@ -46,8 +49,6 @@ data:() =>({pers: {
       country_of_origin: '',
       pregnancy_status: '',
       existing_conditions: [],
-      value: 'http://localhost:3000/profile',
-      size: 300,
   }}),
   methods: {
   readData() {
@@ -73,3 +74,14 @@ data:() =>({pers: {
 
 }
 </script>
+
+<style>
+.center {
+  float: right;
+  
+  margin-left: auto;
+  margin-right: auto;
+  width: 81%;
+  box-sizing: border-box;
+}
+</style>
