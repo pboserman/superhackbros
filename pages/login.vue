@@ -61,16 +61,19 @@ export default {
   }),
   methods: {
     login() {
-      this.$store.dispatch('users/login', this.account).catch(error => {
-        this.isError = true
-        this.errMsg = error.code
+      this.$store
+        .dispatch('users/login', this.account)
+        .then(() => {
+          this.$router.push('/')
+        })
+        .catch(error => {
+          this.isError = true
+          this.errMsg = error.code
 
-        setTimeout(() => {
-          this.isError = false
-        }, 5000)
-      })
-
-      this.$router.push('/')
+          setTimeout(() => {
+            this.isError = false
+          }, 5000)
+        })
     }
   }
 }

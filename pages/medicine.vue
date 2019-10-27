@@ -15,7 +15,7 @@
           <td>{{ medicine.type }}</td>
           <td>
             <span
-              @click="() => removeMedicine(medicine.id)"
+              @click="() => removeMedicine(index)"
               class="icon is-small has-text-danger"
               ><i class="fa fa-times"
             /></span>
@@ -89,22 +89,20 @@ export default {
   }),
   methods: {
     readData() {
-      let ref = db.collection('medicines').orderBy('name')
-      let snap = ref.onSnapshot(querySnapshot => {
-        let data = []
-        querySnapshot.forEach(function(doc) {
-          let d = doc.data()
-          d.id = doc.id
-          data.push(d)
-        })
-        this.medicines = data
+      let ref = db.collection('users').doc(this.user.uid)
+      let snap = ref.onSnapshot(snap => {
+        this.medicines = snap.data().medicines
       })
     },
     addMedicine() {
       let medicine = this.newMed
       medicine.name = medicine.name.replace(/^\w/, c => c.toUpperCase())
       medicine.type = medicine.type.toUpperCase()
-      let ref = db.collection('medicines').add(medicine)
+      this.medicines.push(medicine)
+      let ref = db
+        .collection('users')
+        .doc(this.user.uid)
+        .set({ medicines: this.medicines }, { merge: true })
       this.newMed = {
         name: '',
         dosage: 0,
@@ -112,14 +110,20 @@ export default {
       }
       this.addOpen = false
     },
-    removeMedicine(id) {
-      db.collection('medicines')
-        .doc(id)
-        .delete()
+    removeMedicine(idx) {
+      this.medicines.splice(idx, 1)
+      db.collection('users')
+        .doc(this.user.uid)
+        .set({ medicines: this.medicines }, { merge: true })
     }
   },
   mounted() {
     this.readData()
+  },
+  computed: {
+    user() {
+      return this.$store.state.users.user
+    }
   }
 }
 </script>
