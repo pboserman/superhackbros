@@ -16,13 +16,33 @@
               Search
             </a>
           </div>
+          <div>{{ zipCode }}</div>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script></script>
+<script>
+import { lookUpZipCode } from '~/services/medicineSearch'
+
+export default {
+  data: () => ({
+    zipCode: {}
+  }),
+  methods: {
+    getZipCode() {
+      lookUpZipCode().then(zip => {
+        this.zipCode = zip
+        console.log(zip)
+      })
+    }
+  },
+  mounted() {
+    this.getZipCode()
+  }
+}
+</script>
 
 <style scoped>
 .container {
