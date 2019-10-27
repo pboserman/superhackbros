@@ -1,4 +1,4 @@
-import { auth } from '@/services/firebase'
+import { auth, db } from '@/services/firebase'
 import Cookie from 'js-cookie'
 
 export const state = () => ({
@@ -21,6 +21,26 @@ export const actions = {
       const { email, uid } = auth.currentUser
       // Set JWT to the cookie
       Cookie.set('access_token', token)
+
+      db.collection('users')
+        .doc(uid)
+        .get()
+        .then(snap => {
+          if (!snap.exists) {
+            db.collection('users')
+              .doc(uid)
+              .set({
+                medicines: [],
+                profile: {}
+              })
+              .then(function() {
+                console.log('Document successfully written!')
+              })
+              .catch(function(error) {
+                console.error('Error writing document: ', error)
+              })
+          }
+        })
 
       // Set user locally
       commit('SET_USER', { email, uid })
