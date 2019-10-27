@@ -1,14 +1,13 @@
-const client = require('https');
-const querystring = require('querystring');
-const LOCATION_API = "/locations.json"
+const client = require('https')
+const querystring = require('querystring')
+const LOCATION_API = '/locations.json'
 
 /***
  * Google search results with serpapi.com
  */
 class SerpApiClient {
-
   constructor(api_key = null, engine = 'google') {
-    if (api_key != null) {
+    if (api_key !== null) {
       this.api_key = api_key
     }
 
@@ -21,32 +20,32 @@ class SerpApiClient {
   // private
   buildUrl(path, parameter, output) {
     // Set language
-    parameter["source"] = "nodejs"
+    parameter['source'] = 'nodejs'
 
     // Set format
-    if (output != null) {
-      parameter["output"] = output
+    if (output !== null) {
+      parameter['output'] = output
     }
 
     // Add api_key
-    if (parameter["api_key"] == null) {
-      if (this.api_key != null) {
-        parameter["api_key"] = this.api_key
-      }
-      else if (path == LOCATION_API) {
+    if (parameter['api_key'] === null) {
+      if (this.api_key !== null) {
+        parameter['api_key'] = this.api_key
+      } else if (path === LOCATION_API) {
         // skip free api
-      }
-      else {
-        throw new Error("api_key is required. copy it from: https://serpapi.com/dashboard ")
+      } else {
+        throw new Error(
+          'api_key is required. copy it from: https://serpapi.com/dashboard '
+        )
       }
     }
 
-    if (parameter['engine'] == null) {
+    if (parameter['engine'] === null) {
       parameter['engine'] = this.engine
     }
 
     // build url
-    return "https://serpapi.com" + path + "?" + querystring.stringify(parameter)
+    return 'https://serpapi.com' + path + '?' + querystring.stringify(parameter)
   }
 
   /***
@@ -68,28 +67,29 @@ class SerpApiClient {
   execute(path, parameter, callback, output) {
     let url = this.buildUrl(path, parameter, output)
     client.timeout = this.defaultTimeout
-    client.get(url, (resp) => {
-      let data = ""
+    client
+      .get(url, resp => {
+        let data = ''
 
-      // A chunk of data has been recieved.
-      resp.on('data', (chunk) => {
-        data += chunk
+        // A chunk of data has been recieved.
+        resp.on('data', chunk => {
+          data += chunk
+        })
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+          if (resp.statusCode === 200) {
+            callback(data)
+            return
+          }
+          let msg = JSON.parse(data)
+          throw new Error(msg.error)
+        })
       })
-
-      // The whole response has been received. Print out the result.
-      resp.on('end', () => {
-        if (resp.statusCode == 200) {
-          callback(data)
-          return
-        }
-        let msg = JSON.parse(data)
-        throw new Error(msg.error)
-      });
-
-    }).on("error", (err) => {
-      console.log("Error: " + err.message);
-      throw err;
-    });
+      .on('error', err => {
+        console.log('Error: ' + err.message)
+        throw err
+      })
   }
 
   /***
@@ -99,7 +99,7 @@ class SerpApiClient {
    * @param [Function] callback
    */
   search(parameter, output, callback) {
-    this.execute("/search", parameter, callback, output)
+    this.execute('/search', parameter, callback, output)
   }
 
   /***
@@ -109,27 +109,25 @@ class SerpApiClient {
    * @param [Function] callback with search result as json
    */
   json(parameter, callback) {
-    this.search(parameter, "json", (data) => {
+    this.search(parameter, 'json', data => {
       callback(JSON.parse(data))
     })
   }
 
-
-  /***
-   * @deprecated
-   * Provide json search result in the callback
-   *
-   * @param [Map] parameter query
-   * @param [Function] callback with search result as json
-   * @param [String] api_key
-   */
-  json(parameter, callback, api_key = null) {
-    parameter["api_key"] = api_key
-    this.search(parameter, "json", (data) => {
-      callback(JSON.parse(data))
-    })
-  }
-
+  // /***
+  //  * @deprecated
+  //  * Provide json search result in the callback
+  //  *
+  //  * @param [Map] parameter query
+  //  * @param [Function] callback with search result as json
+  //  * @param [String] api_key
+  //  */
+  // json(parameter, callback, api_key = null) {
+  //   parameter['api_key'] = api_key
+  //   this.search(parameter, 'json', data => {
+  //     callback(JSON.parse(data))
+  //   })
+  // }
 
   /***
    * Provide html search result in the callback
@@ -139,9 +137,14 @@ class SerpApiClient {
    * @param [String] api_key
    */
   html(parameter, callback, api_key = null) {
-    this.search(parameter, "html", (data) => {
-      callback(data)
-    }, api_key)
+    this.search(
+      parameter,
+      'html',
+      data => {
+        callback(data)
+      },
+      api_key
+    )
   }
 
   /***
@@ -152,18 +155,30 @@ class SerpApiClient {
       q: q,
       limit: limit
     }
-    this.execute(LOCATION_API, query, (data) => {
-      callback(JSON.parse(data))
-    }, null, null)
+    this.execute(
+      LOCATION_API,
+      query,
+      data => {
+        callback(JSON.parse(data))
+      },
+      null,
+      null
+    )
   }
 
   /***
    * Account API returns account information in the callback
    */
   account(callback) {
-    this.execute("/account", {}, (data) => {
-      callback(JSON.parse(data))
-    }, null, null)
+    this.execute(
+      '/account',
+      {},
+      data => {
+        callback(JSON.parse(data))
+      },
+      null,
+      null
+    )
   }
 
   /***
@@ -173,10 +188,16 @@ class SerpApiClient {
    * @param api_key user secret key
    */
   search_archive(search_id, callback, api_key = null) {
-    this.execute("/searches/" + search_id + ".json", {}, (data) => {
-      callback(JSON.parse(data))
-    }, null, api_key)
+    this.execute(
+      '/searches/' + search_id + '.json',
+      {},
+      data => {
+        callback(JSON.parse(data))
+      },
+      null,
+      api_key
+    )
   }
 }
 
-module.exports.SerpApiClient = SerpApiClient;
+module.exports.SerpApiClient = SerpApiClient
