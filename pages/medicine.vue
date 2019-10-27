@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="title">My medicines</div>
+    <div class="title">My Medication</div>
     <table class="table is-striped is-fullwidth is-hoverable">
       <thead>
         <th>Medicine</th>
