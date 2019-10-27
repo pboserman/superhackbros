@@ -20,6 +20,7 @@
     "js-cookie": "^2.2.1",
     "jwt-decode": "^2.2.0",
     "nuxt": "^2.0.0",
+    "qrcode.vue": "^1.6.3",
     "vuefire": "^2.2.0-alpha.0"
   },
   "devDependencies": {
