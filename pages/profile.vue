@@ -17,6 +17,13 @@
               Edit</button>
               </nuxt-link>
               </div>
+    <div>
+<<<<<<< HEAD
+            <qrcode-vue :value="value" :size="size" level="H" class="center"></qrcode-vue>
+=======
+            <qrcode-vue :value="value" :size="size" level="H"></qrcode-vue>
+>>>>>>> 41601879a7d16e789b4cfe62af7302a58cedfc23
+    </div>
               
             
     
@@ -31,17 +38,26 @@
 
 <script>
 import {db} from '~/services/firebase.js'
+import QrcodeVue from 'qrcode.vue'
 
 export default {
+data:() =>({
+  value: 'http://localhost:3000/profile',
+  size: 250,
   
-data:() =>({pers: {
+  pers: {
       name: '',
       age: '',
       gender: '',
       ethnicity: '',
       country_of_origin: '',
       pregnancy_status: '',
-      existing_conditions: []
+      existing_conditions: [],
+<<<<<<< HEAD
+=======
+      value: 'http://localhost:3000/profile',
+      size: 300,
+>>>>>>> 41601879a7d16e789b4cfe62af7302a58cedfc23
   }}),
   methods: {
   readData() {
@@ -50,8 +66,10 @@ data:() =>({pers: {
         this.pers = snap.data().personInfo
       })   
   },
-
     
+  },
+  components: {
+    QrcodeVue,
   },
   computed: {
     user() {
@@ -65,3 +83,14 @@ data:() =>({pers: {
 
 }
 </script>
+
+<style>
+.center {
+  float: right;
+  
+  margin-left: auto;
+  margin-right: auto;
+  width: 81%;
+  box-sizing: border-box;
+}
+</style>
