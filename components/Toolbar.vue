@@ -79,8 +79,8 @@ export default {
   -webkit-justify-content: space-around;
   -ms-flex-pack: distribute;
   justify-content: space-around;
-  border-top: 1px solid black;
-  background: linear-gradient(to bottom right, #00effe, white);
+  border-top: 2px solid black;
+  background-color:white;
   bottom: 0;
 }
 
