@@ -8,9 +8,6 @@ const axios = require('axios')
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
 
 // WATCH https://www.youtube.com/watch?v=_-_bz5lH_fI for auth
 
@@ -45,7 +42,7 @@ var shopScrape = function({ medicine, zip }, callback) {
 }
 
 var getZipCode = function(ll) {
-  axios
+  return axios
     .get('https://maps.googleapis.com/maps/api/geocode/json', {
       params: {
         latlng: ll,
@@ -62,7 +59,7 @@ var getZipCode = function(ll) {
 }
 
 var getStoreCoordinates = function(location, callback) {
-  axios
+  return axios
     .get('https://maps.googleapis.com/maps/api/geocode/json', {
       params: {
         address: location,
@@ -80,32 +77,18 @@ var getStoreCoordinates = function(location, callback) {
     })
 }
 
-exports.lookUpZipCode = functions.https.onRequest(({ query }, response) => {
-  let { latlng } = query
-  getZipCode(latlng)
-    .then(res => {
-      response.send(res)
-      return res
-    })
-    .catch(err => {
-      console.log(err)
-    })
+exports.lookUpZipCode = functions.https.onCall(({ latlng }, context) => {
+  return getZipCode(latlng)
 })
 
-exports.lookUpMedicine = functions.https.onRequest(({ query }, response) => {
-  let { medicine, zip } = query
-
-  shopScrape({ medicine, zip }, res => {
-    response.send(res)
+exports.lookUpMedicine = functions.https.onCall((data, context) => {
+  return new Promise((resolve, reject) => {
+    shopScrape(data, res => {
+      resolve(res)
+    })
   })
 })
 
-exports.lookUpStoreCoordinates = functions.https.onRequest(
-  ({ query }, response) => {
-    let { address } = query
-    return getStoreCoordinates(address).then(res => {
-      response.send(res)
-      return res
-    })
-  }
-)
+exports.lookUpStoreCoordinates = functions.https.onCall((data, context) => {
+  return getStoreCoordinates(data)
+})

@@ -1,6 +1,6 @@
 <template>
   <div class="has-navbar-fixed-bottom">
-    <div class="container">
+    <div class="profile">
       <nuxt />
     </div>
     <toolbar />
@@ -9,12 +9,10 @@
 
 <script>
 import Toolbar from '~/components/Toolbar.vue'
-import Title from '~/components/Title.vue'
 
 export default {
   components: {
-    Toolbar,
-    Title
+    Toolbar
   }
 }
 </script>
@@ -22,5 +20,9 @@ export default {
 <style scoped>
 .container {
   padding-top: 15vh;
+}
+.profile {
+  padding-bottom: 100px;
+  padding-top: 20px;
 }
 </style>

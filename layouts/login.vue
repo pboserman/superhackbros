@@ -2,28 +2,20 @@
   <div class="hero">
     <div class="hero-head"></div>
     <div class="hero-body">
-      <div class="columns is-centered">
-        <div class="column is-vcentered is-half">
-          <div class="has-text-centered title">
-            <style>
-              .redText
-              {
-                color:black;
-              }
-              .blackText
-              {
-                color:#0befbf;
-                font-weight:bold;
-              }
-            </style>
-            <span class="redText">Nurse</span><span class="blackText">Spree</span>
-            </div>
-          <nuxt />
-        </div>
-      </div>
+      <Title />
+      <nuxt />
     </div>
   </div>
 </template>
+
+<script>
+import Title from '~/components/Title.vue'
+export default {
+  components: {
+    Title
+  }
+}
+</script>
 
 <style scoped>
 .hero-body {

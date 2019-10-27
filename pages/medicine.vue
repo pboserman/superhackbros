@@ -1,5 +1,7 @@
 <template>
-  <div class="container">
+  <div>
+    <Title />
+    <br />
     <div class="title">My Medication</div>
     <table class="table is-striped is-fullwidth is-hoverable">
       <thead>
@@ -76,8 +78,12 @@
 
 <script>
 import { db } from '~/services/firebase.js'
+import Title from '~/components/Title.vue'
 
 export default {
+  components: {
+    Title
+  },
   data: () => ({
     medicines: [],
     newMed: {
