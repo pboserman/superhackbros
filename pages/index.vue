@@ -33,7 +33,7 @@ import QrcodeVue from 'qrcode.vue'
 export default {
   data: () => ({
     zipCode: {},
-    value: 'https://instagram.com',
+    value: 'http://localhost:3000/profile',
     size: 300,
   }),
   methods: {
