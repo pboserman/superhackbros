@@ -18,7 +18,11 @@
               </nuxt-link>
               </div>
     <div>
+<<<<<<< HEAD
             <qrcode-vue :value="value" :size="size" level="H" class="center"></qrcode-vue>
+=======
+            <qrcode-vue :value="value" :size="size" level="H"></qrcode-vue>
+>>>>>>> 41601879a7d16e789b4cfe62af7302a58cedfc23
     </div>
               
             
@@ -49,6 +53,11 @@ data:() =>({
       country_of_origin: '',
       pregnancy_status: '',
       existing_conditions: [],
+<<<<<<< HEAD
+=======
+      value: 'http://localhost:3000/profile',
+      size: 300,
+>>>>>>> 41601879a7d16e789b4cfe62af7302a58cedfc23
   }}),
   methods: {
   readData() {
