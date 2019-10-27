@@ -6,42 +6,80 @@
         <div class="field has-addons">
           <div class="control">
             <input
+              v-model="medicine"
               class="input is-small"
               type="text"
               placeholder="Look for medicine"
             />
           </div>
           <div class="control">
-            <a class="button is-info is-small">
+            <a @click="getMedicine" class="button is-info is-small">
               Search
             </a>
           </div>
-          <div>{{ zipCode }}</div>
         </div>
       </div>
     </div>
+    <table
+      class="table is-fullwidth is-striped is-hoverable"
+      v-if="results.length"
+    >
+      <thead>
+        <th>Store</th>
+        <th>Price</th>
+        <th>Count</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr v-for="(item, idx) in results" :key="idx">
+          <td>{{ item.source }}</td>
+          <td>{{ item.price }}</td>
+          <td>{{ item.count }}</td>
+          <td>
+            <a
+              target="_blank"
+              :href="item.link"
+              class="button is-small is-link is-outlined"
+            >
+              Directions
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <script>
-import { lookUpZipCode } from '~/services/medicineSearch'
-
+import {
+  getMedicineNearMe,
+  getStoreCoordinates
+} from '~/services/medicineSearch'
 
 export default {
   data: () => ({
-    zipCode: {}
+    zipCode: null,
+    medicine: '',
+    results: [],
+    coords: []
   }),
   methods: {
-    getZipCode() {
-      lookUpZipCode().then(zip => {
-        this.zipCode = zip
-        console.log(zip)
+    getMedicine() {
+      getMedicineNearMe(this.medicine).then(locations => {
+        locations = locations.data
+        Promise.all(
+          locations.map(i => {
+            return getStoreCoordinates(i.source)
+          })
+        ).then(values => {
+          locations.forEach((loc, i) => {
+            loc.link = `https://www.google.com/maps/place/${values[i].data}`
+          })
+          this.results = locations
+        })
       })
     }
-  },
-  mounted() {
-    this.getZipCode()
-  },
+  }
 }
 </script>
 
