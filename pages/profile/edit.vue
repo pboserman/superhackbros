@@ -1,16 +1,27 @@
 <template>
-  <div>
+  <div class="edit-profile">
+    <div class="title has-text-centered">Edit Profile</div>
     <form @submit.prevent>
       <div class="field">
         <label class="label">Name</label>
         <div class="control">
-          <input v-model="newPers.name" class="input" type="text" placeholder="Full Name" />
+          <input
+            v-model="newPers.name"
+            class="input"
+            type="text"
+            placeholder="Full Name"
+          />
         </div>
       </div>
       <div class="field">
         <label class="label">Age</label>
         <div class="control">
-          <input v-model="newPers.age" class="input" type="Integer" placeholder="Age" />
+          <input
+            v-model="newPers.age"
+            class="input"
+            type="Integer"
+            placeholder="Age"
+          />
         </div>
       </div>
       <div class="field">
@@ -31,7 +42,9 @@
         <div class="control">
           <div class="select">
             <select v-model="newPers.ethnicity">
-              <option v-for="(e,index) in ethnicities" :key="index">{{e}}</option>
+              <option v-for="(e, index) in ethnicities" :key="index">{{
+                e
+              }}</option>
             </select>
           </div>
         </div>
@@ -41,7 +54,9 @@
         <div class="control">
           <div class="select">
             <select v-model="newPers.country_of_origin">
-              <option v-for="(c,index) in countries" :key="index">{{c}}</option>
+              <option v-for="(c, index) in countries" :key="index">{{
+                c
+              }}</option>
             </select>
           </div>
         </div>
@@ -61,11 +76,20 @@
       <div class="select is-multiple">
         <label class="label">Existing Conditons</label>
         <select v-model="newPers.existing_conditions" multiple size="6">
-          <option v-for="(c,index) in conditions" :key="index">{{c}}</option>
+          <option v-for="(c, index) in conditions" :key="index">{{ c }}</option>
         </select>
       </div>
-      <div class="level-item is-mobile">
-        <button type="submit" @click="addUser" class="button is-primary">submit</button>
+      <div class="submit level is-mobile">
+        <div class="level-item">
+          <button type="submit" @click="addUser" class="button is-link">
+            Submit
+          </button>
+        </div>
+        <div class="level-item">
+          <nuxt-link to="/profile" class="button is-outlined">
+            Cancel
+          </nuxt-link>
+        </div>
       </div>
     </form>
   </div>
@@ -74,9 +98,10 @@
 <script>
 import { db } from '~/services/firebase.js'
 export default {
+  layout: 'profile',
   data: () => ({
     //#region
-  
+
     ethnicities: [
       'African American',
       'Asian',
@@ -371,18 +396,16 @@ export default {
 
       this.$router.push('/')
     },
-   
-    
+
     addUser() {
-      
       let person = this.newPers
       person.name = person.name.replace(/^\w/, c => c.toUpperCase())
       //person.type = person.type.toUpperCase()
-      
+
       let ref = db
         .collection('users')
         .doc(this.user.uid)
-        .set( { personInfo: this.newPers }, { merge: true })
+        .set({ personInfo: this.newPers }, { merge: true })
       this.newPers = {
         name: '',
         age: '',
@@ -394,8 +417,7 @@ export default {
       }
       this.addOpen = false
       this.submit()
-    },
-
+    }
   },
   // mounted() {
   //   this.readData()
@@ -408,3 +430,8 @@ export default {
 }
 </script>
 
+<style scoped>
+.submit {
+  padding-top: 20px;
+}
+</style>

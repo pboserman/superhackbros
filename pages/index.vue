@@ -1,8 +1,12 @@
 <template>
   <div class="container">
+    <Title show-welcome />
+    <br />
     <div class="columns is-centered is-mobile">
       <div class="column is-two-thirds is-vcentered is-mobile">
-        <div class="title">Search</div>
+        <div class="subtitle is-6 has-text-weight-bold">
+          Search for Medicine Near You
+        </div>
         <div class="field has-addons">
           <div class="control">
             <input
@@ -55,8 +59,10 @@ import {
   getMedicineNearMe,
   getStoreCoordinates
 } from '~/services/medicineSearch'
+import Title from '~/components/Title.vue'
 
 export default {
+  components: { Title },
   data: () => ({
     zipCode: null,
     medicine: '',
@@ -83,8 +89,4 @@ export default {
 }
 </script>
 
-<style scoped>
-.container {
-  padding-top: 25vh;
-}
-</style>
+<style scoped></style>
