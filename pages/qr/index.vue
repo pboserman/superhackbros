@@ -1,7 +1,16 @@
 <template>
   <div>
-    <div class="title has-text-centered">User Information</div>
-    <div class="user-info">
+    <h1 v-if="exists">
+      <div style="margin-top:5px;" class="has-text-centered">
+        {{ pers.name }}'s Information
+      </div>
+    </h1>
+    <h1 v-if="!exists">
+      <div style="margin-top:5px;" class="has-text-centered">
+        No data found for this patient
+      </div>
+    </h1>
+    <div v-if="exists" class="user-info">
       <div>
         <span class="has-text-weight-bold">Name: </span
         ><span>{{ pers.name }}</span>
@@ -31,34 +40,15 @@
         ><span>{{ pers.existing_conditions.join(', ') }}</span>
       </div>
     </div>
-    <br />
-    <div class="level is-mobile is-spaced">
-      <nuxt-link class="level-item" to="/profile/edit">
-        <button
-          type="submit"
-          class="button is-info is-outlined has-text-weight-bold"
-        >
-          Edit
-        </button>
-      </nuxt-link>
-      <nuxt-link class="level-item" to="/profile/qr">
-        <button type="submit" class="button is-outlined has-text-weight-bold">
-          QR Code
-        </button>
-      </nuxt-link>
-    </div>
   </div>
 </template>
 
 <script>
 import { db } from '~/services/firebase.js'
-
 export default {
-  layout: 'profile',
-  data: () => ({
-    value: 'http://localhost:3000/profile',
-    size: 250,
+  layout: 'login',
 
+  data: () => ({
     pers: {
       name: '',
       age: '',
@@ -67,19 +57,20 @@ export default {
       country_of_origin: '',
       pregnancy_status: '',
       existing_conditions: []
-    }
+    },
+    exists: true
   }),
   methods: {
     readData() {
-      let ref = db.collection('users').doc(this.user.uid)
+      let ref = db.collection('qr').doc(this.$route.query.id)
       let snap = ref.onSnapshot(snap => {
-        this.pers = snap.data().personInfo
+        if (snap.exists) {
+          this.exists = true
+          this.pers = snap.data()
+        } else {
+          this.exists = false
+        }
       })
-    }
-  },
-  computed: {
-    user() {
-      return this.$store.state.users.user
     }
   },
   mounted() {
@@ -89,16 +80,8 @@ export default {
 </script>
 
 <style scoped>
-.title {
-  padding-top: 70px;
-}
-.center {
-  float: right;
-
-  margin-left: auto;
-  margin-right: auto;
-  width: 81%;
-  box-sizing: border-box;
+.bold {
+  font-weight: bold;
 }
 .user-info {
   padding-left: 10px;

@@ -1,8 +1,27 @@
+import { db } from './services/firebase.js'
+
 export default {
   mode: 'universal',
   /*
    ** Headers of the page
    */
+
+  // generate: {
+  //   routes() {
+  //     return db
+  //       .collection('qr')
+  //       .get()
+  //       .then(querySnapshot => {
+  //         let docs = []
+  //         querySnapshot.forEach(function(doc) {
+  //           // doc.data() is never undefined for query doc snapshots
+  //           docs.push(doc.id)
+  //         })
+  //         return docs.map(d => `/qr/${d}`)
+  //       })
+  //   }
+  // },
+
   head: {
     title: process.env.npm_package_name || '',
     meta: [

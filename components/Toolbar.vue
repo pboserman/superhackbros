@@ -1,53 +1,66 @@
 <template>
   <div>
-    <nav
-      class="navbar is-primary is-fixed-bottom is-hidden-mobile"
-      role="navigation"
-    >
-      <div class="navbar-brand">
-        <div class="navbar-item">Brand</div>
-        <a
-          role="button"
-          class="navbar-burger burger"
-          aria-label="menu"
-          aria-expanded="false"
-          data-target="navbarBasicExample"
-          @click="open = !open"
-        >
-          <span aria-hidden="true" />
-          <span aria-hidden="true" />
-          <span aria-hidden="true" />
-        </a>
-      </div>
-      <div class="navbar-menu">
-        <div class="navbar-end is-hidden-mobile">
-          <nuxt-link class="navbar-item" to="/">
-            Home
+    <div class="has-navbar-fixed-top is-hidden-mobile">
+      <nav class="navbar is-black is-fixed-top" role="navigation">
+        <div class="navbar-brand">
+          <nuxt-link to="/" class="navbar-item is-size-4">
+            <span class="has-text-white has-text-weight-bold">Nurse</span
+            ><span class="is-green">Spree</span>
           </nuxt-link>
-          <nuxt-link class="navbar-item" to="/medicines">
-            Medicines
-          </nuxt-link>
-          <nuxt-link class="navbar-item" to="/profile">
-            Profile
-          </nuxt-link>
+          <a
+            role="button"
+            class="navbar-burger burger"
+            aria-label="menu"
+            aria-expanded="false"
+            data-target="navbarBasicExample"
+            @click="open = !open"
+          >
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+          </a>
         </div>
-      </div>
-    </nav>
-    <div class="navbar mobile-app-icon-bar is-hidden-tablet is-fixed-bottom">
-      <nuxt-link to="/" class="button has-text-link is-large">
-        <i class="fa fa-home" aria-hidden="true"></i>
-      </nuxt-link>
-      <nuxt-link to="/medicine" class="button has-text-link is-large">
-        <i class="fa fa-heartbeat" aria-hidden="true"></i>
-      </nuxt-link>
-      <nuxt-link to="/profile" class="button has-text-link is-large">
-        <i class="fa fa-user" aria-hidden="true"></i>
-      </nuxt-link>
-      <a @click="logout" class="button is-large">
-        <span class="icon has-text-link"
-          ><i class="fa fa-sign-out" aria-hidden="true"></i
-        ></span>
-      </a>
+        <div class="navbar-menu" :class="{ 'is-active': open }">
+          <div class="navbar-end is-hidden-mobile">
+            <nuxt-link class="navbar-item has-text-weight-semibold" to="/">
+              Home
+            </nuxt-link>
+            <nuxt-link
+              class="navbar-item has-text-weight-semibold"
+              to="/medicine"
+            >
+              Medicines
+            </nuxt-link>
+            <nuxt-link
+              class="navbar-item has-text-weight-semibold"
+              to="/profile"
+            >
+              Profile
+            </nuxt-link>
+            <a class="navbar-item has-text-weight-semibold" @click="logout">
+              Sign out
+            </a>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="has-navbar-fixed-bottom is-hidden-tablet">
+      <nav class="navbar mobile-app-icon-bar is-fixed-bottom">
+        <nuxt-link to="/" class="button has-text-link is-large">
+          <i class="fa fa-home" aria-hidden="true"></i>
+        </nuxt-link>
+        <nuxt-link to="/medicine" class="button has-text-link is-large">
+          <i class="fa fa-heartbeat" aria-hidden="true"></i>
+        </nuxt-link>
+        <nuxt-link to="/profile" class="button has-text-link is-large">
+          <i class="fa fa-user" aria-hidden="true"></i>
+        </nuxt-link>
+        <a @click="logout" class="button is-large">
+          <span class="icon has-text-link"
+            ><i class="fa fa-sign-out" aria-hidden="true"></i
+          ></span>
+        </a>
+      </nav>
     </div>
   </div>
 </template>
@@ -57,18 +70,25 @@ import { auth } from '@/services/firebase'
 import Cookie from 'js-cookie'
 
 export default {
+  data: () => ({
+    open: false
+  }),
   methods: {
     async logout() {
       await auth.signOut()
       await Cookie.remove('access_token')
 
-      location.href = "/login"
+      location.href = '/login'
     }
   }
 }
 </script>
 
 <style scoped>
+.is-green {
+  color: #0befbf;
+  font-weight: bold;
+}
 .mobile-app-icon-bar {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -80,7 +100,7 @@ export default {
   -ms-flex-pack: distribute;
   justify-content: space-around;
   border-top: 2px solid black;
-  background-color:white;
+  background-color: white;
   bottom: 0;
 }
 

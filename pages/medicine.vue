@@ -149,4 +149,8 @@ form {
 .add-med {
   padding-left: 2%;
 }
+.title {
+  padding: 15px;
+  padding-bottom: 5px;
+}
 </style>
