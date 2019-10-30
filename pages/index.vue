@@ -11,7 +11,7 @@
           <div class="control">
             <input
               v-model="medicine"
-              class="input is-small"
+              class="input is-small is-fullwidth"
               type="text"
               placeholder="Look for medicine"
             />

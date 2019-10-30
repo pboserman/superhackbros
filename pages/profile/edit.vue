@@ -1,97 +1,101 @@
 <template>
   <div class="edit-profile">
     <div class="title has-text-centered">Edit Profile</div>
-    <form @submit.prevent>
-      <div class="field">
-        <label class="label">Name</label>
-        <div class="control">
-          <input
-            v-model="newPers.name"
-            class="input"
-            type="text"
-            placeholder="Full Name"
-          />
-        </div>
-      </div>
-      <div class="field">
-        <label class="label">Age</label>
-        <div class="control">
-          <input
-            v-model="newPers.age"
-            class="input"
-            type="Integer"
-            placeholder="Age"
-          />
-        </div>
-      </div>
-      <div class="field">
-        <label class="label">Gender</label>
-        <div class="control">
-          <div class="select">
-            <select v-model="newPers.gender">
-              <option>Male</option>
-              <option>Female</option>
-              <option>I'd Prefer Not To Say</option>
-            </select>
+    <div class="container">
+      <form @submit.prevent>
+        <div class="field">
+          <label class="label">Name</label>
+          <div class="control">
+            <input
+              v-model="newPers.name"
+              class="input"
+              type="text"
+              placeholder="Full Name"
+            />
           </div>
         </div>
-      </div>
+        <div class="field">
+          <label class="label">Age</label>
+          <div class="control">
+            <input
+              v-model="newPers.age"
+              class="input"
+              type="Integer"
+              placeholder="Age"
+            />
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Gender</label>
+          <div class="control">
+            <div class="select">
+              <select v-model="newPers.gender">
+                <option>Male</option>
+                <option>Female</option>
+                <option>I'd Prefer Not To Say</option>
+              </select>
+            </div>
+          </div>
+        </div>
 
-      <div class="field">
-        <label class="label">Ethnicity</label>
-        <div class="control">
-          <div class="select">
-            <select v-model="newPers.ethnicity">
-              <option v-for="(e, index) in ethnicities" :key="index">{{
-                e
-              }}</option>
-            </select>
+        <div class="field">
+          <label class="label">Ethnicity</label>
+          <div class="control">
+            <div class="select">
+              <select v-model="newPers.ethnicity">
+                <option v-for="(e, index) in ethnicities" :key="index">{{
+                  e
+                }}</option>
+              </select>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="field">
-        <label class="label">Country of Origin</label>
-        <div class="control">
-          <div class="select">
-            <select v-model="newPers.country_of_origin">
-              <option v-for="(c, index) in countries" :key="index">{{
-                c
-              }}</option>
-            </select>
+        <div class="field">
+          <label class="label">Country of Origin</label>
+          <div class="control">
+            <div class="select">
+              <select v-model="newPers.country_of_origin">
+                <option v-for="(c, index) in countries" :key="index">{{
+                  c
+                }}</option>
+              </select>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="field">
-        <label class="label">Pregnancy Status</label>
-        <div class="control">
-          <div class="select">
-            <select v-model="newPers.pregnancy_status">
-              <option>Not Pregnant</option>
-              <option>Pregnant</option>
-              <option>I'd Prefer Not To Say</option>
-            </select>
+        <div class="field">
+          <label class="label">Pregnancy Status</label>
+          <div class="control">
+            <div class="select">
+              <select v-model="newPers.pregnancy_status">
+                <option>Not Pregnant</option>
+                <option>Pregnant</option>
+                <option>I'd Prefer Not To Say</option>
+              </select>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="select is-multiple">
-        <label class="label">Existing Conditons</label>
-        <select v-model="newPers.existing_conditions" multiple size="6">
-          <option v-for="(c, index) in conditions" :key="index">{{ c }}</option>
-        </select>
-      </div>
-      <div class="submit level is-mobile">
-        <div class="level-item">
-          <button type="submit" @click="addUser" class="button is-link">
-            Submit
-          </button>
+        <div class="select is-multiple">
+          <label class="label">Existing Conditons</label>
+          <select v-model="newPers.existing_conditions" multiple size="6">
+            <option v-for="(c, index) in conditions" :key="index">{{
+              c
+            }}</option>
+          </select>
         </div>
-        <div class="level-item">
-          <nuxt-link to="/profile" class="button is-outlined">
-            Cancel
-          </nuxt-link>
+        <div class="submit level is-mobile">
+          <div class="level-item">
+            <button type="submit" @click="addUser" class="button is-link">
+              Submit
+            </button>
+          </div>
+          <div class="level-item">
+            <nuxt-link to="/profile" class="button is-outlined">
+              Cancel
+            </nuxt-link>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -431,6 +435,9 @@ export default {
 </script>
 
 <style scoped>
+.title {
+  padding-top: 70px;
+}
 .submit {
   padding-top: 20px;
 }

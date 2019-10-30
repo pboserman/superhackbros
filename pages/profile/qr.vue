@@ -3,6 +3,7 @@
     <div class="title has-text-centered">Personal QR Code</div>
     <div class="level qr-code">
       <qrcode-vue
+        v-if="value"
         :value="value"
         :size="size"
         level="H"
@@ -30,8 +31,24 @@ import QrcodeVue from 'qrcode.vue'
 
 export default {
   layout: 'profile',
+  methods: {
+    makeQR() {
+      let context = this
+      let ref = db.collection('users').doc(this.user.uid)
+      let snap = ref.onSnapshot(snap => {
+        let info = snap.data().personInfo
+        return db
+          .collection('qr')
+          .add(info)
+          .then(docRef => {
+            context.value = `https://superhackbros-b8a46.firebaseapp.com/qr?id=${docRef.id}`
+          })
+      })
+      return snap
+    }
+  },
   data: () => ({
-    value: 'http://localhost:3000/profile',
+    value: null,
     size: 250,
 
     pers: {
@@ -51,11 +68,17 @@ export default {
     user() {
       return this.$store.state.users.user
     }
+  },
+  mounted() {
+    this.makeQR()
   }
 }
 </script>
 
 <style scoped>
+.title {
+  padding-top: 70px;
+}
 .qr-code {
   padding-top: 50px;
 }

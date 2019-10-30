@@ -19,4 +19,4 @@ const config = {
 export const auth = firebase.auth()
 export const db = firebase.firestore()
 export const functions = firebase.functions()
-functions.useFunctionsEmulator('http://localhost:5000')
+// functions.useFunctionsEmulator('http://localhost:5000')
