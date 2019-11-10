@@ -30,7 +30,7 @@ var shopScrape = function({ medicine, zip }, callback) {
       .map(i => ({
         source: i.source.replace('from ', ''),
         price: i.price,
-        count: i.snippet.split(' ').slice(-2)[0]
+        count: i.extensions[data.shopping_results[0].extensions.length - 1] ? i.extensions[data.shopping_results[0].extensions.length - 1] : 'Not Available'
       }))
       .filter(i => !/(\.com)|(^\d)|Online|eBay/gi.test(i.source))
 
