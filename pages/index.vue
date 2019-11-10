@@ -17,7 +17,7 @@
             />
           </div>
           <div class="control">
-            <a @click="getMedicine" class="button is-info is-small">
+            <a @click="getMedicine" class="button is-small is-info" :class="loading ? 'is-loading' : ''">
               Search
             </a>
           </div>
@@ -67,12 +67,14 @@ export default {
     zipCode: null,
     medicine: '',
     results: [],
-    coords: []
+    coords: [],
+    loading: false
   }),
   methods: {
     getMedicine() {
       getMedicineNearMe(this.medicine).then(locations => {
         locations = locations.data
+        this.loading = true;
         Promise.all(
           locations.map(i => {
             return getStoreCoordinates(i.source)
@@ -82,6 +84,7 @@ export default {
             loc.link = `https://www.google.com/maps/place/${values[i].data}`
           })
           this.results = locations
+          this.loading = false;
         })
       })
     }
